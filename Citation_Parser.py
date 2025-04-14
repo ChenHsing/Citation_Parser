@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # Google Scholar Profile Parsing
-gs_profile_link = 'https://scholar.google.com/citations?user=ub2WBpoAAAAJ'
+gs_profile_link = 'https://scholar.google.com/citations?user=yuiXa5EAAAAJ'
 
 page = requests.get(gs_profile_link).text
 soup = BeautifulSoup(page,"html.parser")
