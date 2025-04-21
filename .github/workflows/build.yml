@@ -8,31 +8,44 @@ on:
     - cron: '0 0 * * *'    # 保留原有的定时
   workflow_dispatch:      # 手动触发仍然可用
 
+# 给 contents 写权限，才能 git push
+permissions:
+  contents: write
+
 jobs:
   update-badge:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      # 1. 检出 main 分支所有提交历史（fetch-depth: 0）
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0          # 取足够的历史以便后续 git push
 
+      # 2. 安装 Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      # 3. 安装依赖
+      - name: Install deps
         run: pip install google-search-results requests
 
+      # 4. 运行脚本，生成或更新 scholar_badge.svg
       - name: Generate badge SVG
         env:
           SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
         run: python update_scholar_badge.py
 
-      - name: Commit & Push
+      # 5. 提交并推 main 分支
+      - name: Commit & Push badge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "你的用户名"
-          git config user.email "你的邮箱"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add scholar_badge.svg
           git diff --quiet || git commit -m "chore: update Google Scholar badge"
-          git push
+          git push origin main
