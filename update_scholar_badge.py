@@ -54,8 +54,8 @@ def fetch_citations(author_id: str, api_key: str) -> int:
 
 def main():
     author_id = "yuiXa5EAAAAJ"
-    # api_key = os.getenv("SERPAPI_API_KEY")
-    api_key = '5ec1d1ba2f6e6afcd8b1b981ba66916005750d4e4930626f95862d17729ee97b'
+    api_key = os.getenv("SERPAPI_API_KEY")
+    # api_key = '5ec1d1ba2f6e6afcd8b1b981ba66916005750d4e4930626f95862d17729ee97b'
     if not api_key:
         print("错误：环境变量 SERPAPI_API_KEY 未设置", file=sys.stderr)
         sys.exit(1)
