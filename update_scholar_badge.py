@@ -4,6 +4,7 @@ import os
 import sys
 import requests
 from serpapi import GoogleSearch
+import cairosvg
 
 
 def fetch_citations(author_id: str, api_key: str) -> int:
@@ -67,12 +68,12 @@ def main():
     # 新版：左侧是蓝底白字的 Google Scholar icon，右侧是灰底黑字的引用数
     badge_link = {
         'gs_pymk_cite': (
-            "https://img.shields.io/badge/"
-            "Citations-{cite}-_"
-            ".svg"
-            "?logo=google-scholar"
-            "&labelColor=4f4f4f"
-            "&color=3388ee"
+        "https://img.shields.io/badge/"
+        f"Citations-{citations}-_.svg"
+        "?logo=google-scholar"
+        "&labelColor=4f4f4f"
+        "&color=brightgreen"
+        "&style=social"
         ).format(cite=citations),
     }
 
@@ -86,6 +87,16 @@ def main():
     with open("scholar_badge.svg", "wb") as f:
         f.write(r.content)
 
+    svg_data = requests.get(badge_url).content
+
+    # 转成 PNG，设置输出宽度或 DPI
+    cairosvg.svg2png(
+    bytestring=svg_data,
+    write_to="scholar_badge.png",
+    scale=4            # 输出 4× 分辨率
+    # 或者直接设置 dpi=300
+    # dpi=600
+    )
 
 if __name__ == "__main__":
     main()

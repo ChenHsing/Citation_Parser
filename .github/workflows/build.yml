@@ -28,7 +28,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install deps
-        run: pip install google-search-results requests
+        run: pip install google-search-results requests cairosvg
 
       - name: Generate badge SVG
         env:
