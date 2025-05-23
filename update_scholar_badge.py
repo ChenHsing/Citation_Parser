@@ -1,5 +1,5 @@
-# update_scholar_badge.py
 
+import json
 import os
 import sys
 import requests
@@ -63,6 +63,19 @@ def main():
 
     citations = fetch_citations(author_id, api_key)
     print(f"当前引用数: {citations}")
+    token = '512c086e1e1c4d61bd185f35ed0bd276'  # 在pushpush网站中可以找到
+    title = 'Google Citations'  # 改成你要的标题内容
+    content = f"当前引用数: {citations}"  # 改成你要的正文内容
+    url = 'http://www.pushplus.plus/send'
+    data = {
+        "token": token,
+        "title": title,
+        "content": content
+    }
+    body = json.dumps(data).encode(encoding='utf-8')
+    headers = {'Content-Type': 'application/json'}
+    requests.post(url, data=body, headers=headers)
+
 
     # 利用 shields.io 的动态 badge URL
     # 新版：左侧是蓝底白字的 Google Scholar icon，右侧是灰底黑字的引用数
@@ -81,7 +94,6 @@ def main():
     badge_url = badge_link['gs_pymk_cite']
 
     # 下载并写文件
-    import requests
     r = requests.get(badge_url)
     r.raise_for_status()
     with open("scholar_badge.svg", "wb") as f:
