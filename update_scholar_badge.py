@@ -84,9 +84,10 @@ def main():
         "https://img.shields.io/badge/"
         f"Citations-{citations}-_.svg"
         "?logo=google-scholar"
-        "&labelColor=4f4f4f"
-        "&color=brightgreen"
-        "&style=social"
+        "&logoColor=000000"
+        "&labelColor=fbbc05"
+        "&color=615ced"
+        "&style=flat"
         ).format(cite=citations),
     }
 
