@@ -6,7 +6,6 @@ import requests
 from serpapi import GoogleSearch
 import cairosvg
 
-
 def fetch_citations(author_id: str, api_key: str) -> int:
     """
     调用 SerpApi 的 Google Scholar Author API（engine=google_scholar_author）,
